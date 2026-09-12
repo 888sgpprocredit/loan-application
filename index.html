@@ -42,6 +42,26 @@ body {
     margin-bottom: 8px;
 }
 
+.language-switcher {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.language-switcher button {
+    width: auto;
+    padding: 8px 14px;
+    font-size: 14px;
+    background: #eee;
+    color: #222;
+}
+
+.language-switcher button.active {
+    background: #111;
+    color: white;
+}
+
 .subtitle {
     text-align: center;
     color: #777;
@@ -113,6 +133,166 @@ button:disabled {
     color: #c62828;
 }
 
+
+/* Brand / WhatsApp design */
+:root {
+    --brand-blue: #125dcc;
+    --brand-dark: #123d78;
+    --brand-light: #eef6ff;
+    --whatsapp: #18b95b;
+}
+
+body {
+    background: linear-gradient(180deg, #eef7ff 0%, #f7fbff 100%);
+}
+
+.container {
+    max-width: 620px;
+    margin: 28px auto;
+    padding: 15px;
+}
+
+.card {
+    padding: 28px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(18,61,120,0.10);
+}
+
+.brand {
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.brand-logo {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    background: var(--brand-blue);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: 800;
+    box-shadow: 0 6px 18px rgba(18,93,204,0.25);
+    position: relative;
+}
+
+.brand-logo::after {
+    content: "";
+    position: absolute;
+    width: 44px;
+    height: 18px;
+    border: 3px solid #f5b51b;
+    border-left-color: transparent;
+    border-radius: 50%;
+    transform: rotate(-18deg);
+}
+
+.brand-name {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--brand-dark);
+    letter-spacing: .2px;
+}
+
+.brand-tagline {
+    color: #6a7f9d;
+    font-size: 14px;
+    margin-top: 3px;
+}
+
+.hero {
+    background: linear-gradient(135deg, #edf6ff, #ffffff);
+    border-radius: 16px;
+    padding: 18px;
+    margin: 18px 0 22px;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 27px;
+    font-weight: 800;
+    color: var(--brand-dark);
+    margin-bottom: 7px;
+}
+
+.hero-text {
+    color: #607797;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.language-switcher button {
+    border: 1px solid #d7e2f0;
+    background: white;
+    color: var(--brand-blue);
+}
+
+.language-switcher button.active {
+    background: var(--brand-blue);
+    color: white;
+}
+
+input, textarea {
+    border: 1px solid #d7e0ea;
+    transition: .2s;
+}
+
+input:focus, textarea:focus {
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px rgba(18,93,204,.10);
+}
+
+button[type="submit"] {
+    background: linear-gradient(135deg, #1265dc, #0c4eae);
+    box-shadow: 0 7px 18px rgba(18,93,204,.20);
+}
+
+.whatsapp {
+    display: block;
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 13px;
+    background: var(--whatsapp);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 17px;
+    box-shadow: 0 7px 18px rgba(24,185,91,.20);
+}
+
+.whatsapp small {
+    display: block;
+    margin-top: 4px;
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.footer-brand {
+    text-align: center;
+    color: var(--brand-dark);
+    font-weight: 800;
+    margin-top: 22px;
+    font-size: 16px;
+}
+
+.footer-note {
+    text-align: center;
+    color: #7d8fa8;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+@media (max-width: 560px) {
+    .container { margin: 10px auto; }
+    .card { padding: 20px; }
+    .brand-name { font-size: 21px; }
+    .hero-title { font-size: 24px; }
+}
+
 </style>
 
 </head>
@@ -125,11 +305,22 @@ button:disabled {
 
 <div class="card">
 
-<div class="logo">
-Loan Application
+<div class="brand">
+    <div class="brand-logo">888</div>
+    <div class="brand-name">888 SG Pro Credit</div>
+    <div class="brand-tagline">Your Trusted Loan Partner</div>
 </div>
 
-<div class="subtitle">
+<div class="hero">
+    <div class="hero-title" id="heroTitle">贷款申请</div>
+    <div class="hero-text" id="heroText">简单申请 · 快速回复 · 专业服务</div>
+</div>
+<div class="language-switcher">
+<button type="button" id="zhButton" class="active">中文</button>
+<button type="button" id="enButton">English</button>
+</div>
+
+<div class="subtitle" id="subtitle">
 请填写以下资料，我们会尽快与您联系
 </div>
 
@@ -139,7 +330,7 @@ Loan Application
 
 <div class="form-group">
 
-<label>
+<label id="nameLabel">
 姓名 <span class="required">*</span>
 </label>
 
@@ -154,7 +345,21 @@ required>
 
 <div class="form-group">
 
-<label>
+<label id="dobLabel">
+出生日期 <span class="required">*</span>
+</label>
+
+<input
+type="date"
+id="dob"
+required>
+
+</div>
+
+
+<div class="form-group">
+
+<label id="addressLabel">
 地址 <span class="required">*</span>
 </label>
 
@@ -168,7 +373,7 @@ required></textarea>
 
 <div class="form-group">
 
-<label>
+<label id="phoneLabel">
 手机号码 <span class="required">*</span>
 </label>
 
@@ -183,7 +388,7 @@ required>
 
 <div class="form-group">
 
-<label>
+<label id="jobLabel">
 工作 <span class="required">*</span>
 </label>
 
@@ -198,7 +403,7 @@ required>
 
 <div class="form-group">
 
-<label>
+<label id="amountLabel">
 贷款额度 <span class="required">*</span>
 </label>
 
@@ -226,6 +431,15 @@ id="message"
 class="message">
 </div>
 
+
+
+<a class="whatsapp" id="whatsappLink" href="https://wa.me/6583091814" target="_blank" rel="noopener">
+    <span id="whatsappTitle">WhatsApp 联系我们</span>
+    <small id="whatsappText">有任何疑问？立即咨询我们！</small>
+</a>
+
+<div class="footer-brand">888 SG Pro Credit</div>
+<div class="footer-note" id="footerNote">您的信任 · 我们的承诺</div>
 
 </form>
 
@@ -264,7 +478,7 @@ form.addEventListener("submit", function(event) {
 
     button.disabled = true;
 
-    button.innerText = "提交中...";
+    button.innerText = currentLanguage === "zh" ? "提交中..." : "Submitting...";
 
 
     const formData = new FormData();
@@ -273,6 +487,11 @@ form.addEventListener("submit", function(event) {
     formData.append(
         "name",
         document.getElementById("name").value
+    );
+
+    formData.append(
+        "dob",
+        document.getElementById("dob").value
     );
 
     formData.append(
@@ -311,7 +530,9 @@ form.addEventListener("submit", function(event) {
             "message success";
 
         message.innerText =
-            "资料提交成功！我们会尽快与您联系。";
+            currentLanguage === "zh"
+                ? "资料提交成功！我们会尽快与您联系。"
+                : "Application submitted successfully! We will contact you soon.";
 
         message.style.display =
             "block";
@@ -321,7 +542,7 @@ form.addEventListener("submit", function(event) {
         button.disabled = false;
 
         button.innerText =
-            "提交资料";
+            currentLanguage === "zh" ? "提交资料" : "Submit Application";
 
     })
     .catch(function(error) {
@@ -332,7 +553,9 @@ form.addEventListener("submit", function(event) {
             "message error";
 
         message.innerText =
-            "提交失败，请稍后再试。";
+            currentLanguage === "zh"
+                ? "提交失败，请稍后再试。"
+                : "Submission failed. Please try again later.";
 
         message.style.display =
             "block";
@@ -340,12 +563,97 @@ form.addEventListener("submit", function(event) {
         button.disabled = false;
 
         button.innerText =
-            "提交资料";
+            currentLanguage === "zh" ? "提交资料" : "Submit Application";
 
     });
 
 });
 
+
+
+let currentLanguage = "zh";
+
+const translations = {
+    zh: {
+        subtitle: "请填写以下资料，我们会尽快与您联系",
+        name: "姓名",
+        namePlaceholder: "请输入您的姓名",
+        dob: "出生日期",
+        address: "地址",
+        addressPlaceholder: "请输入您的地址",
+        phone: "手机号码",
+        phonePlaceholder: "请输入手机号码",
+        job: "工作",
+        jobPlaceholder: "例如：Sales / Business Owner",
+        amount: "贷款额度",
+        amountPlaceholder: "例如：50000",
+        submit: "提交资料",
+        heroTitle: "贷款申请",
+        heroText: "简单申请 · 快速回复 · 专业服务",
+        whatsappTitle: "WhatsApp 联系我们",
+        whatsappText: "有任何疑问？立即咨询我们！",
+        whatsappMessage: "我对你们的服务非常感兴趣，想了解更多！",
+        footerNote: "您的信任 · 我们的承诺"
+    },
+    en: {
+        subtitle: "Please fill in the details below and we will contact you soon.",
+        name: "Full Name",
+        namePlaceholder: "Please enter your full name",
+        dob: "Date of Birth",
+        address: "Address",
+        addressPlaceholder: "Please enter your address",
+        phone: "Mobile Number",
+        phonePlaceholder: "Please enter your mobile number",
+        job: "Occupation",
+        jobPlaceholder: "e.g. Sales / Business Owner",
+        amount: "Loan Amount",
+        amountPlaceholder: "e.g. 50000",
+        submit: "Submit Application",
+        heroTitle: "Loan Application",
+        heroText: "Simple application · Fast response · Professional service",
+        whatsappTitle: "Contact us on WhatsApp",
+        whatsappText: "Have any questions? Chat with us now!",
+        whatsappMessage: "I am very interested in your services and would like to know more!",
+        footerNote: "Your trust · Our commitment"
+    }
+};
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    const t = translations[lang];
+
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+    document.getElementById("subtitle").innerText = t.subtitle;
+    document.getElementById("heroTitle").innerText = t.heroTitle;
+    document.getElementById("heroText").innerText = t.heroText;
+    document.getElementById("whatsappTitle").innerText = t.whatsappTitle;
+    document.getElementById("whatsappText").innerText = t.whatsappText;
+    document.getElementById("whatsappLink").href =
+        "https://wa.me/6583091814?text=" + encodeURIComponent(t.whatsappMessage);
+    document.getElementById("footerNote").innerText = t.footerNote;
+
+    document.getElementById("nameLabel").innerHTML = t.name + ' <span class="required">*</span>';
+    document.getElementById("dobLabel").innerHTML = t.dob + ' <span class="required">*</span>';
+    document.getElementById("addressLabel").innerHTML = t.address + ' <span class="required">*</span>';
+    document.getElementById("phoneLabel").innerHTML = t.phone + ' <span class="required">*</span>';
+    document.getElementById("jobLabel").innerHTML = t.job + ' <span class="required">*</span>';
+    document.getElementById("amountLabel").innerHTML = t.amount + ' <span class="required">*</span>';
+
+    document.getElementById("name").placeholder = t.namePlaceholder;
+    document.getElementById("address").placeholder = t.addressPlaceholder;
+    document.getElementById("phone").placeholder = t.phonePlaceholder;
+    document.getElementById("job").placeholder = t.jobPlaceholder;
+    document.getElementById("amount").placeholder = t.amountPlaceholder;
+
+    document.getElementById("submitButton").innerText = t.submit;
+
+    document.getElementById("zhButton").classList.toggle("active", lang === "zh");
+    document.getElementById("enButton").classList.toggle("active", lang === "en");
+}
+
+document.getElementById("zhButton").addEventListener("click", () => setLanguage("zh"));
+document.getElementById("enButton").addEventListener("click", () => setLanguage("en"));
+setLanguage("zh");
 
 </script>
 
